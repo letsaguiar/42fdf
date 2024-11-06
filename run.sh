@@ -30,5 +30,5 @@ export SRC_FILES=$(find ${SRC_DIR} -name "*.c")
 
 export RUNNER="${ROOT_DIR}/runner"
 ${CC} ${CFLAGS} ${SRC_FILES} ${FILE} -o ${RUNNER} ${CLIBS} ${CINCLUDES}
-${RUNNER}
+${RUNNER} $1
 rm -f ${RUNNER}
