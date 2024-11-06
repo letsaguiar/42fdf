@@ -15,5 +15,14 @@ int main(int argc, char **argv)
         return (1);
     }
 
+    t_screen *screen = screen_init();
+    if (!screen)
+    {
+        ft_printf("Failed to initialize screen\n");
+        return (1);
+    }
+
+    screen_clear(screen);
+
     return (0);
 }
