@@ -28,13 +28,7 @@ export CINCLUDES="-I${LIBFT_DIR} \
 export SRC_DIR="${ROOT_DIR}/src"
 export SRC_FILES=$(find ${SRC_DIR} -name "*.c")
 
-export TEST_DIR="${ROOT_DIR}/test"
-export TEST_FILES=$(find ${TEST_DIR} -name "*.c")
-
-export RUNNER="${TEST_DIR}/runner"
-for FILE in ${TEST_FILES}
-do
-    ${CC} ${CFLAGS} ${SRC_FILES} ${FILE} -o ${RUNNER} ${CLIBS} ${CINCLUDES}
-    ${RUNNER}
-    rm -f ${RUNNER}
-done
+export RUNNER="${ROOT_DIR}/runner"
+${CC} ${CFLAGS} ${SRC_FILES} ${FILE} -o ${RUNNER} ${CLIBS} ${CINCLUDES}
+${RUNNER}
+rm -f ${RUNNER}
