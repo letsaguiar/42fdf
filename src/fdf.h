@@ -10,6 +10,8 @@ typedef char** t_map;
 
 t_bool  map_validate(t_string filename);
 
+void    map_iter(t_string filename, void (*f)(int, int, int));
+
 void    map_clear(t_map map);
 
 #endif
