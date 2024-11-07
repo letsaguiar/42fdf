@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-t_screen    *screen_init()
+t_screen    *screen_init(t_string filename)
 {
     t_screen *screen = ft_calloc(1, sizeof(t_screen));
     if (!screen)
@@ -22,6 +22,13 @@ t_screen    *screen_init()
 
     screen->image = image_init(screen);
     if (!screen->image)
+    {
+        screen_clear(screen);
+        return (NULL);
+    }
+
+    screen->filename = ft_strdup(filename);
+    if (!screen->filename)
     {
         screen_clear(screen);
         return (NULL);

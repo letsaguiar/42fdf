@@ -2,28 +2,25 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-void    map_iter(t_string filename, void (*f)(int, int, int))
+void    map_iter(t_string filename, void (*f)(void *, int, int), void *params)
 {
     int fd = open(filename, O_RDONLY);
     if (fd < 0)
         return ;
 
     t_string line = NULL;
-    size_t y = 0;
+    int y = 0;
     while ((line = get_next_line(fd)))
     {
-        t_string* row = ft_split(line, ' ');
-        if (!row)
-        {
-            close(fd);
-            return ;
-        }
+        t_string *split = ft_split(line, ' ');
+        for (int x = 0; split[x]; x++)
+            f(params, x, y);
 
-        for (size_t x = 0; row[x]; x++)
-            f(x, y, ft_atoi(row[x]));
-
-        map_clear(row);
         free(line);
+        map_clear(split);
+
         y++;
     }
+
+    close(fd);
 }

@@ -15,7 +15,7 @@ int main(int argc, char **argv)
         return (1);
     }
 
-    t_screen *screen = screen_init();
+    t_screen *screen = screen_init(filename);
     if (!screen)
     {
         ft_printf("Failed to initialize screen\n");

@@ -20,16 +20,8 @@ static int screen_destroy(t_screen *screen)
 
 static int screen_loop(t_screen *screen)
 {
-    for (size_t i = 0; i < SCREEN_SIZE; i++)
-    {
-        for (size_t j = 0; j < SCREEN_SIZE; j++)
-        {
-            image_draw_pixel(screen->image, i, j, 0xFFFFFF);
-        }
-    }
-
+    screen_render(screen);
     mlx_put_image_to_window(screen->mlx, screen->win, screen->image->img, 0, 0);
-
     return (0);
 }
 
