@@ -12,6 +12,10 @@
 #  define SCREEN_SIZE 800
 # endif
 
+# ifndef TILE_SIZE
+#  define TILE_SIZE 20
+# endif
+
 typedef struct s_map
 {
     int     **data;
