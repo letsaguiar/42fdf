@@ -17,8 +17,6 @@ void    project(t_point *point, int offset_x, int offset_y)
     // Translate the origin to the center of the screen
     point->x += offset_x;
     point->y += offset_y;
-
-    printf("x: %d, y: %d\n", point->x, point->y);
 }
 
 void    image_draw_square(t_image *image, t_point point, int offset_x, int offset_y, int color)
