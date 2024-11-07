@@ -20,5 +20,12 @@ t_screen    *screen_init()
         return (NULL);
     }
 
+    screen->image = image_init(screen);
+    if (!screen->image)
+    {
+        screen_clear(screen);
+        return (NULL);
+    }
+
     return (screen);
 }

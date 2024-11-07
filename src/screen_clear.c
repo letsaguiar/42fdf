@@ -2,6 +2,8 @@
 
 void    screen_clear(t_screen *screen)
 {
+    if (screen->image)
+        image_clear(screen, screen->image);
     if (screen->win)
         mlx_destroy_window(screen->mlx, screen->win);
     if (screen->mlx)

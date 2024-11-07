@@ -14,10 +14,21 @@
 
 typedef char** t_map;
 
+typedef struct s_image
+{
+    void *img;
+    char *addr;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
+} t_image;
+
+
 typedef struct s_screen
 {
-    void *mlx;
-    void *win;
+    void    *mlx;
+    void    *win;
+    t_image *image;
 } t_screen;
 
 t_bool      map_validate(t_string filename);
@@ -31,5 +42,9 @@ t_screen    *screen_init();
 void        screen_run(t_screen *screen);
 
 void        screen_clear(t_screen *screen);
+
+t_image     *image_init(t_screen *screen);
+
+void        image_clear(t_screen *screen, t_image *image);
 
 #endif
