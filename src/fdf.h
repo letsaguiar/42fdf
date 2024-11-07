@@ -37,6 +37,13 @@ typedef struct s_screen
     t_image     *image;
 } t_screen;
 
+typedef struct s_point
+{
+    int x;
+    int y;
+    int z;
+} t_point;
+
 t_map       *map_init(t_string filename);
 
 t_bool      map_validate(t_string filename);
@@ -57,9 +64,11 @@ void        screen_clear(t_screen *screen);
 
 t_image     *image_init(t_screen *screen);
 
-void        image_draw_pixel(t_image *image, int x, int y, int color);
+void        image_draw_pixel(t_image *image, t_point point, int color);
 
-void        image_draw_line(t_image *image, int x0, int y0, int x1, int y1, int color);
+void        image_draw_line(t_image *image, t_point p1, t_point p2, int color);
+
+void        image_draw_square(t_image *image, t_point point, int color);
 
 void        image_clear(t_screen *screen, t_image *image);
 
