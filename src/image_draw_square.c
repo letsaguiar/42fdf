@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdio.h>
 
-void    project(t_point *point)
+void    project(t_point *point, int offset_x, int offset_y)
 {
     float angle = 30 * M_PI / 180; 
 
@@ -15,12 +15,13 @@ void    project(t_point *point)
     point->y = original_x * sin(angle) + original_y * sin(angle) - point->z;
 
     // Translate the origin to the center of the screen
-    point->x += SCREEN_SIZE / 2;
+    point->x += offset_x;
+    point->y += offset_y;
 
     printf("x: %d, y: %d\n", point->x, point->y);
 }
 
-void    image_draw_square(t_image *image, t_point point, int color)
+void    image_draw_square(t_image *image, t_point point, int offset_x, int offset_y, int color)
 {
     int tile_offset = TILE_SIZE / 2;
     t_point p1 = {point.x - tile_offset, point.y - tile_offset, point.z};
@@ -28,8 +29,8 @@ void    image_draw_square(t_image *image, t_point point, int color)
     t_point p3 = {point.x + tile_offset, point.y + tile_offset, point.z};
     t_point p4 = {point.x - tile_offset, point.y + tile_offset, point.z};
 
-    project(&p1); project(&p2);
-    project(&p3); project(&p4);
+    project(&p1, offset_x, offset_y); project(&p2, offset_x, offset_y);
+    project(&p3, offset_x, offset_y); project(&p4, offset_x, offset_y);
 
     image_draw_line(image, p1, p2, color);
     image_draw_line(image, p2, p3, color);
