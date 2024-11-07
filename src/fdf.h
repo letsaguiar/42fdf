@@ -12,7 +12,12 @@
 #  define SCREEN_SIZE 800
 # endif
 
-typedef char** t_map;
+typedef struct s_map
+{
+    char    *filename;
+    size_t  width;
+    size_t  height;
+} t_map;
 
 typedef struct s_image
 {
@@ -26,19 +31,21 @@ typedef struct s_image
 
 typedef struct s_screen
 {
-    t_string    filename;
     void        *mlx;
     void        *win;
+    t_map       *map;
     t_image     *image;
 } t_screen;
 
-t_bool      map_validate(t_string filename);
+t_map       *map_init(t_string filename);
 
-void        map_iter(t_string filename, void (*f)(void *, int, int, int), void *params);
+t_map       *map_validate(t_map *map);
 
-void        map_clear(t_map map);
+void        map_iter(t_map *map, void (*f)(void *, int, int, int), void *params);
 
-t_screen    *screen_init(t_string filename);
+void        map_clear(t_map *map);
+
+t_screen    *screen_init(t_map *map);
 
 void        screen_run(t_screen *screen);
 

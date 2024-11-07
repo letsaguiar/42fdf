@@ -9,13 +9,14 @@ int main(int argc, char **argv)
     }
 
     t_string filename = argv[1];
-    if (!map_validate(filename))
+    t_map *map = map_init(filename);
+    if (!map)
     {
-        ft_printf("Invalid map\n");
+        ft_printf("Failed to initialize map\n");
         return (1);
     }
 
-    t_screen *screen = screen_init(filename);
+    t_screen *screen = screen_init(map);
     if (!screen)
     {
         ft_printf("Failed to initialize screen\n");

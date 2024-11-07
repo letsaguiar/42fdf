@@ -2,8 +2,8 @@
 
 void    screen_clear(t_screen *screen)
 {
-    if (screen->filename)
-        free(screen->filename);
+    if (screen->map)
+        map_clear(screen->map);
     if (screen->image)
         image_clear(screen, screen->image);
     if (screen->win)

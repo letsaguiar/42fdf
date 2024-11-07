@@ -1,14 +1,8 @@
 #include "fdf.h"
 
-void    map_clear(t_map map)
+void    map_clear(t_map *map)
 {
-    size_t  i;
-
-    i = 0;
-    while (map[i])
-    {
-        free(map[i]);
-        i++;
-    }
+    if (map->filename)
+        free(map->filename);
     free(map);
 }

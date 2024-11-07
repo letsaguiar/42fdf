@@ -2,9 +2,16 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-static t_bool   map_validate_empty(t_string filename)
+static void row_clear(char **row)
 {
-    int fd = open(filename, O_RDONLY);
+    for (size_t i = 0; row[i]; i++)
+        free(row[i]);
+    free(row);
+}
+
+static t_bool   map_validate_empty(t_map *map)
+{
+    int fd = open(map->filename, O_RDONLY);
     if (fd < 0)
         return (FALSE);
 
@@ -15,43 +22,49 @@ static t_bool   map_validate_empty(t_string filename)
     return (buffer != '\0');
 }
 
-static t_bool   map_validate_width(t_string filename)
+static t_bool   map_validate_width(t_map *map)
 {
-    int fd = open(filename, O_RDONLY);
+    int fd = open(map->filename, O_RDONLY);
     if (fd < -1)
         return (FALSE);
 
     t_string line = NULL;
-    size_t width = 0;
+    size_t height = 0;
     while ((line = get_next_line(fd)))
     {
-        t_map map = ft_split(line, ' ');
+        t_string *row = ft_split(line, ' ');
 
         size_t tmp = 0;
-        for (size_t i = 0; map[i]; i++)
+        for (size_t i = 0; row[i]; i++)
             tmp++;
-        if (width == 0)
-            width = tmp;
-        else if (width != tmp)
+        if (map->width == 0)
+            map->width = tmp;
+        else if (tmp != map->width)
         {
             map_clear(map);
+            row_clear(row);
             free(line);
             close(fd);
             return (FALSE);
         }
 
-        map_clear(map);
+        row_clear(row);
         free(line);
+        height++;
     }
+    map->height = height;
 
     close(fd);
     return (TRUE);
 }
 
-t_bool  map_validate(t_string filename)
+t_map   *map_validate(t_map *map)
 {
-    return (
-        map_validate_empty(filename)
-        && map_validate_width(filename)
-    );
+    if (
+        !map_validate_empty(map)
+        || !map_validate_width(map)
+    )
+        return (NULL);
+
+    return (map);
 }

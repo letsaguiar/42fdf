@@ -14,5 +14,5 @@ static void screen_render_iter(void *params, int x, int y, int z)
 
 void    screen_render(t_screen *screen)
 {
-    map_iter(screen->filename, screen_render_iter, screen);
+    map_iter(screen->map, screen_render_iter, screen);
 }
