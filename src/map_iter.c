@@ -2,32 +2,24 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-static void row_clear(char **row)
+void    map_iter_row(t_map *map, void (*f)(void *, int, int, int), void *params)
 {
-    for (size_t i = 0; row[i]; i++)
-        free(row[i]);
-    free(row);
+    for (size_t y = 0; y < map->height; y++)
+    {
+        for (size_t x = 0; x < map->width; x++)
+        {
+            f(params, x, y, map->data[y][x]);
+        }
+    }
 }
 
-void    map_iter(t_map *map, void (*f)(void *, int, int, int), void *params)
+void    map_iter_col(t_map *map, void (*f)(void *, int, int, int), void *params)
 {
-    int fd = open(map->filename, O_RDONLY);
-    if (fd < 0)
-        return ;
-
-    t_string line = NULL;
-    int y = 0;
-    while ((line = get_next_line(fd)))
+    for (size_t x = 0; x < map->width; x++)
     {
-        t_string *split = ft_split(line, ' ');
-        for (int x = 0; split[x]; x++)
-            f(params, x, y, ft_atoi(split[x]));
-
-        free(line);
-        row_clear(split);
-
-        y++;
+        for (size_t y = 0; y < map->height; y++)
+        {
+            f(params, x, y, map->data[y][x]);
+        }
     }
-
-    close(fd);
 }

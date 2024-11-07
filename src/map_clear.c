@@ -2,7 +2,11 @@
 
 void    map_clear(t_map *map)
 {
-    if (map->filename)
-        free(map->filename);
+    if (map->data)
+    {
+        for (size_t i = 0; i < map->height; i++)
+            free(map->data[i]);
+        free(map->data);
+    }
     free(map);
 }

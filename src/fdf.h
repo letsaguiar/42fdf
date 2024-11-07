@@ -14,7 +14,7 @@
 
 typedef struct s_map
 {
-    char    *filename;
+    int     **data;
     size_t  width;
     size_t  height;
 } t_map;
@@ -39,9 +39,11 @@ typedef struct s_screen
 
 t_map       *map_init(t_string filename);
 
-t_map       *map_validate(t_map *map);
+t_bool      map_validate(t_string filename);
 
-void        map_iter(t_map *map, void (*f)(void *, int, int, int), void *params);
+void        map_iter_row(t_map *map, void (*f)(void *, int, int, int), void *params);
+
+void        map_iter_col(t_map *map, void (*f)(void *, int, int, int), void *params);
 
 void        map_clear(t_map *map);
 
