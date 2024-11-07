@@ -22,7 +22,7 @@ int main(int argc, char **argv)
         return (1);
     }
 
-    screen_clear(screen);
+    screen_run(screen);
 
     return (0);
 }

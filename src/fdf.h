@@ -5,6 +5,8 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include <mlx.h>
+# include <X11/Xlib.h>
+# include <X11/keysym.h>
 
 # ifndef SCREEN_SIZE
 #  define SCREEN_SIZE 800
@@ -25,6 +27,8 @@ void        map_iter(t_string filename, void (*f)(int, int, int));
 void        map_clear(t_map map);
 
 t_screen    *screen_init();
+
+void        screen_run(t_screen *screen);
 
 void        screen_clear(t_screen *screen);
 
