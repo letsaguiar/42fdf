@@ -34,7 +34,7 @@ typedef struct s_screen
 
 t_bool      map_validate(t_string filename);
 
-void        map_iter(t_string filename, void (*f)(void *, int, int), void *params);
+void        map_iter(t_string filename, void (*f)(void *, int, int, int), void *params);
 
 void        map_clear(t_map map);
 
