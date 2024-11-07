@@ -45,6 +45,8 @@ void        screen_clear(t_screen *screen);
 
 t_image     *image_init(t_screen *screen);
 
+void        image_draw_pixel(t_image *image, int x, int y, int color);
+
 void        image_clear(t_screen *screen, t_image *image);
 
 #endif
