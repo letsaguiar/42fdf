@@ -3,17 +3,20 @@
 
 void    image_draw_line(t_image *image, int x0, int y0, int x1, int y1, int color)
 {
-    int dx = abs(x1 - x0);
-    int dy = abs(y1 - y0);    
-    int step = dx > dy ? dx : dy;
+    int dx = x1 - x0;
+    int dy = y1 - y0;
+    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
 
-    int x = x0;
-    int y = y0;
+    float x_inc = dx / (float) steps;
+    float y_inc = dy / (float) steps;
 
-    for (int i = 0; i <= step; i++)
+    float x = x0;
+    float y = y0;
+
+    for (int i = 0; i <= steps; i++)
     {
-        image_draw_pixel(image, x, y, color);
-        x += dx / step;
-        y += dy / step;
+        image_draw_pixel(image, round(x), round(y), color);
+        x += x_inc;
+        y += y_inc;
     }
 }
