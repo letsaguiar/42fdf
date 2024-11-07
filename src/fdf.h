@@ -70,6 +70,8 @@ t_image     *image_init(t_screen *screen);
 
 void        image_draw_pixel(t_image *image, t_point point, int color);
 
+void        image_draw_line(t_image *image, t_point p1, t_point p2, int color);
+
 void        image_clear(t_screen *screen, t_image *image);
 
 #endif
