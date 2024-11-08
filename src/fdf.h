@@ -76,4 +76,6 @@ void        image_draw_square(t_image *image, t_point point, int offset_x, int o
 
 void        image_clear(t_screen *screen, t_image *image);
 
+void        project(t_point *point, int offset_x, int offset_y);
+
 #endif
