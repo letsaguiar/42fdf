@@ -13,7 +13,7 @@
 # endif
 
 # ifndef TILE_SIZE
-#  define TILE_SIZE 20
+#  define TILE_SIZE 25
 # endif
 
 typedef struct s_map
