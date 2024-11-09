@@ -55,7 +55,7 @@ static size_t   get_height(t_string filename)
     }
 
     close(fd);
-    return (height - 1);
+    return (height);
 }
 
 t_map   *map_init(t_string filename)
@@ -83,19 +83,13 @@ t_map   *map_init(t_string filename)
         return (NULL);
 
     t_string line = NULL;
-    for (size_t i = 0; i < map->height; i++)
+    for (size_t i = 0; (line = get_next_line(fd)); i++)
     {
         map->data[i] = ft_calloc(map->width, sizeof(int));
         if (!map->data[i])
         {
             map_clear(map);
-            return (NULL);
-        }
-
-        line = get_next_line(fd);
-        if (!line)
-        {
-            map_clear(map);
+            close(fd);
             return (NULL);
         }
 
@@ -103,11 +97,12 @@ t_map   *map_init(t_string filename)
         if (!split)
         {
             map_clear(map);
+            close(fd);
             free(line);
             return (NULL);
         }
 
-        for (size_t j = 0; j < map->width; j++)
+        for (size_t j = 0; split[j]; j++)
             map->data[i][j] = ft_atoi(split[j]);
 
         row_clear(split);
