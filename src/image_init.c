@@ -6,7 +6,7 @@ t_image     *image_init(t_screen *screen)
     if (!image)
         return (NULL);
 
-    image->img = mlx_new_image(screen->mlx, SCREEN_SIZE, SCREEN_SIZE);
+    image->img = mlx_new_image(screen->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
     if (!image->img)
     {
         free(image);

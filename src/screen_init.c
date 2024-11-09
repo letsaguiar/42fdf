@@ -13,7 +13,7 @@ t_screen    *screen_init(t_map *map)
         return (NULL);
     }
 
-    screen->win = mlx_new_window(screen->mlx, SCREEN_SIZE, SCREEN_SIZE, "FDF");
+    screen->win = mlx_new_window(screen->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "FDF");
     if (!screen->win)
     {
         screen_clear(screen);
@@ -28,6 +28,10 @@ t_screen    *screen_init(t_map *map)
     }
 
     screen->map = map;
+    screen->tile_width = TILE_WIDTH;
+    screen->tile_height = TILE_HEIGHT;
+    screen->screen_width = SCREEN_WIDTH;
+    screen->screen_height = SCREEN_HEIGHT;
 
     return (screen);
 }

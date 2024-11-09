@@ -2,8 +2,8 @@
 
 static void calc_top_left(t_point *point, t_screen *screen, int x, int y, size_t offset_x, size_t offset_y)
 {
-    int dstX = x * TILE_SIZE;
-    int dstY = y * TILE_SIZE;
+    int dstX = x * screen->tile_width;
+    int dstY = y * screen->tile_height;
     int dstZ = screen->map->data[y][x];
 
     *point = (t_point){dstX - offset_x, dstY - offset_y, dstZ};
@@ -38,12 +38,12 @@ void    screen_render(t_screen *screen)
 {
     t_map *map = screen->map;
 
-    size_t map_height = map->height * TILE_SIZE;
-    size_t screen_height = SCREEN_SIZE;
+    size_t map_height = map->height * screen->tile_height;
+    size_t screen_height = screen->screen_height;
     size_t offset_y = (screen_height - map_height) / 2;
 
-    size_t map_width = map->width * TILE_SIZE;
-    size_t screen_width = SCREEN_SIZE;
+    size_t map_width = map->width * screen->tile_width;
+    size_t screen_width = screen->screen_width;
     size_t offset_x = (screen_width - map_width) / 2;
 
     for (size_t y = 0; y < map->height; y++)

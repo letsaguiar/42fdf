@@ -8,12 +8,20 @@
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
 
-# ifndef SCREEN_SIZE
-#  define SCREEN_SIZE 800
+# ifndef SCREEN_WIDTH
+#  define SCREEN_WIDTH 800
 # endif
 
-# ifndef TILE_SIZE
-#  define TILE_SIZE 25
+# ifndef SCREEN_HEIGHT
+#  define SCREEN_HEIGHT 800
+# endif
+
+# ifndef TILE_WIDTH
+#  define TILE_WIDTH 25
+# endif
+
+# ifndef TILE_HEIGHT
+#  define TILE_HEIGHT 30 
 # endif
 
 typedef struct s_map
@@ -39,6 +47,10 @@ typedef struct s_screen
     void        *win;
     t_map       *map;
     t_image     *image;
+    int         tile_width;
+    int         tile_height;
+    int         screen_width;
+    int         screen_height;
 } t_screen;
 
 typedef struct s_point
