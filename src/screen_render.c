@@ -2,10 +2,9 @@
 
 static void screen_clean(t_screen *screen)
 {
-    t_image *image = screen->image;
-    for (int y = 0; y < screen->screen_height; y++)
-        for (int x = 0; x < screen->screen_width; x++)
-            image_draw_pixel(image, (t_point){x, y, 0} ,0x000000);
+    for (int y = 0; y < screen->height; y++)
+        for (int x = 0; x < screen->width; x++)
+            image_draw_pixel(screen, screen->image, (t_point){x, y, 0} ,0x000000);
 }
 
 static void calc_top_left(t_point *point, t_screen *screen, int x, int y, size_t offset_x, size_t offset_y)
@@ -52,11 +51,11 @@ void    screen_render(t_screen *screen)
     t_map *map = screen->map;
 
     size_t map_height = map->height * screen->tile_height;
-    size_t screen_height = screen->screen_height;
+    size_t screen_height = screen->height;
     size_t offset_y = (screen_height - map_height) / 2;
 
     size_t map_width = map->width * screen->tile_width;
-    size_t screen_width = screen->screen_width;
+    size_t screen_width = screen->width;
     size_t offset_x = (screen_width - map_width) / 2;
 
     screen_clean(screen);
@@ -70,9 +69,9 @@ void    screen_render(t_screen *screen)
             calc_bottom_left(&bottom_left, screen, x, y, offset_x, offset_y);
             calc_bottom_right(&bottom_right, screen, x, y, offset_x, offset_y);
 
-            image_draw_line(screen->image, top_left, top_right, 0x00FF00);
-            image_draw_line(screen->image, top_left, bottom_left, 0x00FF00);
-            image_draw_line(screen->image, top_right, bottom_right, 0x00FF00);
-            image_draw_line(screen->image, bottom_left, bottom_right, 0x00FF00);
+            image_draw_line(screen, screen->image, top_left, top_right, 0x00FF00);
+            image_draw_line(screen, screen->image, top_left, bottom_left, 0x00FF00);
+            image_draw_line(screen, screen->image, top_right, bottom_right, 0x00FF00);
+            image_draw_line(screen, screen->image, bottom_left, bottom_right, 0x00FF00);
         }
 }

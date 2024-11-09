@@ -47,10 +47,10 @@ typedef struct s_screen
     void        *win;
     t_map       *map;
     t_image     *image;
+    int         width;
+    int         height;
     int         tile_width;
     int         tile_height;
-    int         screen_width;
-    int         screen_height;
     int         move_up;
     int         move_down;
     int         move_left;
@@ -97,9 +97,9 @@ void        screen_clear(t_screen *screen);
 
 t_image     *image_init(t_screen *screen);
 
-void        image_draw_pixel(t_image *image, t_point point, int color);
+void        image_draw_pixel(t_screen *screen, t_image *image, t_point point, int color);
 
-void        image_draw_line(t_image *image, t_point p1, t_point p2, int color);
+void        image_draw_line(t_screen *screen, t_image *image, t_point p1, t_point p2, int color);
 
 void        image_clear(t_screen *screen, t_image *image);
 

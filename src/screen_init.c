@@ -31,8 +31,8 @@ t_screen    *screen_init(t_map *map)
     screen->map = map;
     screen->tile_width = TILE_WIDTH;
     screen->tile_height = TILE_HEIGHT;
-    screen->screen_width = SCREEN_WIDTH;
-    screen->screen_height = SCREEN_HEIGHT;
+    screen->width = SCREEN_WIDTH;
+    screen->height = SCREEN_HEIGHT;
     screen->move_up = 0;
     screen->move_down = 0;
     screen->move_left = 0;

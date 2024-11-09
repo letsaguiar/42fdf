@@ -1,8 +1,8 @@
 #include "fdf.h"
 
-void    image_draw_pixel(t_image *image, t_point point, int color)
+void    image_draw_pixel(t_screen *screen, t_image *image, t_point point, int color)
 {
-    if (point.x < 0 || point.y < 0)
+    if (point.x < 0 || point.y < 0 || point.x >= screen->width || point.y >= screen->height)
         return ;
 
     char *dst;

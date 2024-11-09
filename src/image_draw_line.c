@@ -1,7 +1,7 @@
 #include "fdf.h"
 #include <math.h>
 
-void    image_draw_line(t_image *image, t_point p1, t_point p2, int color)
+void    image_draw_line(t_screen *screen, t_image *image, t_point p1, t_point p2, int color)
 {
     int dx = abs(p2.x - p1.x);
     int dy = abs(p2.y - p1.y);
@@ -11,7 +11,7 @@ void    image_draw_line(t_image *image, t_point p1, t_point p2, int color)
 
     while (1)
     {
-        image_draw_pixel(image, p1, color);
+        image_draw_pixel(screen, image, p1, color);
         if (p1.x == p2.x && p1.y == p2.y)
             break;
 
