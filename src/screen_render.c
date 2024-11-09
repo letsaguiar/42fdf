@@ -14,8 +14,8 @@ static void calc_top_left(t_point *point, t_screen *screen, int x, int y, size_t
     int dstZ = screen->map->data[y][x];
 
     *point = (t_point){
-        dstX - offset_x + screen->move_right - screen->move_left,
-        dstY - offset_y + screen->move_down - screen->move_up,
+        dstX - offset_x + screen->x,
+        dstY - offset_y + screen->y,
         dstZ
     };
 

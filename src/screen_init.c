@@ -33,11 +33,11 @@ t_screen    *screen_init(t_map *map)
     screen->tile_height = TILE_HEIGHT;
     screen->width = SCREEN_WIDTH;
     screen->height = SCREEN_HEIGHT;
-    screen->move_up = 0;
-    screen->move_down = 0;
-    screen->move_left = 0;
-    screen->move_right = 0;
+    screen->x = 0;
+    screen->y = 0;
     screen->angle = M_PI / 6.0f;
+    screen->left_mouse_down = FALSE;
+    screen->right_mouse_down = FALSE;
 
     return (screen);
 }

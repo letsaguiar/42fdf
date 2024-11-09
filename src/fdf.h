@@ -51,11 +51,13 @@ typedef struct s_screen
     int         height;
     int         tile_width;
     int         tile_height;
-    int         move_up;
-    int         move_down;
-    int         move_left;
-    int         move_right;
+    int         x;
+    int         y;
     float       angle;
+    t_bool      left_mouse_down;
+    t_bool      right_mouse_down;
+    int         mouse_x;
+    int         mouse_y;
 } t_screen;
 
 typedef struct s_point

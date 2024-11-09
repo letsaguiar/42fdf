@@ -1,5 +1,48 @@
 #include "fdf.h"
 
+static int screen_button_press(int button, int x, int y, t_screen *screen)
+{
+    (void)x;
+    (void)y;
+    
+    if (button == 1)
+        screen->left_mouse_down = TRUE;
+    else if (button == 4)
+        screen_zoom_in(screen);
+    else if (button == 5)
+        screen_zoom_out(screen);
+    return (0);
+}
+
+static int screen_button_release(int button, int x, int y, t_screen *screen)
+{
+    (void)x;
+    (void)y;
+    
+    if (button == 1)
+        screen->left_mouse_down = FALSE;
+    return (0);
+}
+
+static int screen_mouse_move(int x, int y, t_screen *screen)
+{
+    if (screen->left_mouse_down)
+    {
+        int dx = x - screen->mouse_x;
+        int dy = y - screen->mouse_y;
+
+        // Adjust the sensitivity of the movement
+        float sensitivity = 0.9;
+
+        screen->x += dx * sensitivity;
+        screen->y += dy * sensitivity;
+    }
+
+    screen->mouse_x = x;
+    screen->mouse_y = y;
+    return (0);
+}
+
 static int screen_key_press(int keycode, t_screen *screen)
 {
     if (keycode == XK_Escape)
@@ -33,23 +76,13 @@ static int screen_loop(t_screen *screen)
     return (0);
 }
 
-static int screen_mouse_scroll(int button, int x, int y, t_screen *screen)
-{
-    (void)x;
-    (void)y;
-    
-    if (button == 4)
-        screen_zoom_in(screen);
-    if (button == 5)
-        screen_zoom_out(screen);
-    return (0);
-}
-
 void    screen_run(t_screen *screen)
 {
     mlx_hook(screen->win, DestroyNotify, StructureNotifyMask, screen_destroy, screen);
     mlx_hook(screen->win, KeyPress, KeyPressMask, screen_key_press, screen);
-    mlx_hook(screen->win, ButtonPress, ButtonPressMask, screen_mouse_scroll, screen);
+    mlx_hook(screen->win, ButtonPress, ButtonPressMask, screen_button_press, screen);
+    mlx_hook(screen->win, ButtonRelease, ButtonReleaseMask, screen_button_release, screen);
+    mlx_hook(screen->win, MotionNotify, PointerMotionMask, screen_mouse_move, screen);
     mlx_loop_hook(screen->mlx, screen_loop, screen);
     mlx_loop(screen->mlx);
 }
