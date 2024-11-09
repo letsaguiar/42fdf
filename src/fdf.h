@@ -55,6 +55,7 @@ typedef struct s_screen
     int         move_down;
     int         move_left;
     int         move_right;
+    float       angle;
 } t_screen;
 
 typedef struct s_point
@@ -102,6 +103,6 @@ void        image_draw_line(t_image *image, t_point p1, t_point p2, int color);
 
 void        image_clear(t_screen *screen, t_image *image);
 
-void        project(t_point *point, int offset_x, int offset_y);
+void        project(t_screen *screen, t_point *point, int offset_x, int offset_y);
 
 #endif

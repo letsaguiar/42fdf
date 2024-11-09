@@ -1,9 +1,9 @@
 #include "fdf.h"
 #include <math.h>
 
-void    project(t_point *point, int offset_x, int offset_y)
+void    project(t_screen *screen, t_point *point, int offset_x, int offset_y)
 {
-    float angle = 30 * M_PI / 180; 
+    float angle = screen->angle;
 
     // Store original x and y to avoid overwriting values
     int original_x = point->x;

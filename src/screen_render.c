@@ -20,7 +20,7 @@ static void calc_top_left(t_point *point, t_screen *screen, int x, int y, size_t
         dstZ
     };
 
-    project(point, offset_x, offset_y);
+    project(screen, point, offset_x, offset_y);
 }
 
 static void calc_top_right(t_point *point, t_screen *screen, int x, int y, size_t offset_x, size_t offset_y)
