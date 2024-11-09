@@ -50,7 +50,6 @@ static size_t   get_height(t_string filename)
     size_t height = 0;
     while ((line = get_next_line(fd)))
     {
-        ft_printf("line: %s\n", line);
         free(line);
         height++;
     }
@@ -72,7 +71,6 @@ t_map   *map_init(t_string filename)
         return (NULL);
     map->width = get_width(filename);
     map->height = get_height(filename);
-    ft_printf("width: %d, height: %d\n", map->width, map->height);
     map->data = ft_calloc(map->height, sizeof(int *));
     if (!map->data)
     {
@@ -87,14 +85,12 @@ t_map   *map_init(t_string filename)
     t_string line = NULL;
     for (size_t i = 0; i < map->height; i++)
     {
-        ft_printf("starting %d\n", i);
         map->data[i] = ft_calloc(map->width, sizeof(int));
         if (!map->data[i])
         {
             map_clear(map);
             return (NULL);
         }
-        ft_printf("end %d\n", i);
 
         line = get_next_line(fd);
         if (!line)

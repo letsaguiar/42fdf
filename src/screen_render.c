@@ -12,7 +12,7 @@ void    screen_render_iter(void *params, int x, int y, int z)
 
     size_t map_width = map->width * TILE_SIZE;
     size_t screen_width = SCREEN_SIZE;
-    size_t offset_x = (screen_width - map_width) / 5 * 4;
+    size_t offset_x = (screen_width - map_width) / 2;
 
     t_point point = {x * TILE_SIZE, y * TILE_SIZE, z};
     image_draw_square(image, point, offset_x, offset_y, 0x00FF00);
@@ -31,7 +31,7 @@ void    screen_render_connect(void *params, int x, int y, int z)
 
     size_t map_width = map->width * TILE_SIZE;
     size_t screen_width = SCREEN_SIZE;
-    size_t offset_x = (screen_width - map_width) / 5 * 4;
+    size_t offset_x = (screen_width - map_width) / 2;
 
     if ((size_t)x < map->width - 1)
     {
