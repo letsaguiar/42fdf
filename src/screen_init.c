@@ -35,7 +35,8 @@ t_screen    *screen_init(t_map *map)
     screen->height = SCREEN_HEIGHT;
     screen->x = 0;
     screen->y = 0;
-    screen->angle = M_PI / 6.0f;
+    screen->x_angle = M_PI / 6.0f;
+    screen->y_angle = M_PI / 6.0f;
     screen->left_mouse_down = FALSE;
     screen->right_mouse_down = FALSE;
 

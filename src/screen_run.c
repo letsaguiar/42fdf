@@ -7,6 +7,8 @@ static int screen_button_press(int button, int x, int y, t_screen *screen)
     
     if (button == 1)
         screen->left_mouse_down = TRUE;
+    else if (button == 3)
+        screen->right_mouse_down = TRUE;
     else if (button == 4)
         screen_zoom_in(screen);
     else if (button == 5)
@@ -21,6 +23,8 @@ static int screen_button_release(int button, int x, int y, t_screen *screen)
     
     if (button == 1)
         screen->left_mouse_down = FALSE;
+    if (button == 3)
+        screen->right_mouse_down = FALSE;
     return (0);
 }
 
@@ -30,12 +34,17 @@ static int screen_mouse_move(int x, int y, t_screen *screen)
     {
         int dx = x - screen->mouse_x;
         int dy = y - screen->mouse_y;
-
-        // Adjust the sensitivity of the movement
         float sensitivity = 0.9;
 
         screen->x += dx * sensitivity;
         screen->y += dy * sensitivity;
+    }
+    if (screen->right_mouse_down)
+    {
+        int dy = y - screen->mouse_y;
+        float sensitivity = 0.01;
+
+        screen->y_angle += dy * sensitivity;
     }
 
     screen->mouse_x = x;

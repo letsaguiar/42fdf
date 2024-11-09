@@ -53,7 +53,8 @@ typedef struct s_screen
     int         tile_height;
     int         x;
     int         y;
-    float       angle;
+    float       x_angle;
+    float       y_angle;
     t_bool      left_mouse_down;
     t_bool      right_mouse_down;
     int         mouse_x;

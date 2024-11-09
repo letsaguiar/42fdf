@@ -3,15 +3,16 @@
 
 void    project(t_screen *screen, t_point *point, int offset_x, int offset_y)
 {
-    float angle = screen->angle;
+    float angle_x = screen->x_angle;
+    float angle_y = screen->y_angle;
 
     // Store original x and y to avoid overwriting values
     int original_x = point->x;
     int original_y = point->y;
 
     // Apply isometric projection
-    point->x = original_x * cos(angle) - original_y * cos(angle);
-    point->y = original_x * sin(angle) + original_y * sin(angle) - point->z;
+    point->x = original_x * cos(angle_x) - original_y * cos(angle_x);
+    point->y = original_x * sin(angle_y) + original_y * sin(angle_y) - point->z;
 
     // Translate the origin to the center of the screen
     point->x += offset_x;
