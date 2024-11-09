@@ -76,6 +76,10 @@ void        screen_run(t_screen *screen);
 
 void        screen_render(t_screen *screen);
 
+void        screen_zoom_in(t_screen *screen);
+
+void        screen_zoom_out(t_screen *screen);
+
 void        screen_clear(t_screen *screen);
 
 t_image     *image_init(t_screen *screen);

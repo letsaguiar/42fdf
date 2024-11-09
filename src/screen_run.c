@@ -25,10 +25,23 @@ static int screen_loop(t_screen *screen)
     return (0);
 }
 
+static int screen_mouse_scroll(int button, int x, int y, t_screen *screen)
+{
+    (void)x;
+    (void)y;
+    
+    if (button == 4)
+        screen_zoom_in(screen);
+    if (button == 5)
+        screen_zoom_out(screen);
+    return (0);
+}
+
 void    screen_run(t_screen *screen)
 {
     mlx_hook(screen->win, DestroyNotify, StructureNotifyMask, screen_destroy, screen);
     mlx_hook(screen->win, KeyPress, KeyPressMask, screen_key_press, screen);
+    mlx_hook(screen->win, ButtonPress, ButtonPressMask, screen_mouse_scroll, screen);
     mlx_loop_hook(screen->mlx, screen_loop, screen);
     mlx_loop(screen->mlx);
 }

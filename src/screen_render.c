@@ -1,5 +1,13 @@
 #include "fdf.h"
 
+static void screen_clean(t_screen *screen)
+{
+    t_image *image = screen->image;
+    for (int y = 0; y < screen->screen_height; y++)
+        for (int x = 0; x < screen->screen_width; x++)
+            image_draw_pixel(image, (t_point){x, y, 0} ,0x000000);
+}
+
 static void calc_top_left(t_point *point, t_screen *screen, int x, int y, size_t offset_x, size_t offset_y)
 {
     int dstX = x * screen->tile_width;
@@ -45,6 +53,8 @@ void    screen_render(t_screen *screen)
     size_t map_width = map->width * screen->tile_width;
     size_t screen_width = screen->screen_width;
     size_t offset_x = (screen_width - map_width) / 2;
+
+    screen_clean(screen);
 
     for (size_t y = 0; y < map->height; y++)
         for (size_t x = 0; x < map->width; x++)
