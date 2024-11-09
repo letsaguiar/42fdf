@@ -7,6 +7,14 @@ static int screen_key_press(int keycode, t_screen *screen)
         screen_clear(screen);
         exit(0);
     }
+    if (keycode == XK_Up || keycode == XK_w)
+        screen_move_up(screen);
+    if (keycode == XK_Down || keycode == XK_s)
+        screen_move_down(screen);
+    if (keycode == XK_Left || keycode == XK_a)
+        screen_move_left(screen);
+    if (keycode == XK_Right || keycode == XK_d)
+        screen_move_right(screen);
 
     return (0);
 }

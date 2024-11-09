@@ -51,6 +51,10 @@ typedef struct s_screen
     int         tile_height;
     int         screen_width;
     int         screen_height;
+    int         move_up;
+    int         move_down;
+    int         move_left;
+    int         move_right;
 } t_screen;
 
 typedef struct s_point
@@ -79,6 +83,14 @@ void        screen_render(t_screen *screen);
 void        screen_zoom_in(t_screen *screen);
 
 void        screen_zoom_out(t_screen *screen);
+
+void        screen_move_up(t_screen *screen);
+
+void        screen_move_down(t_screen *screen);
+
+void        screen_move_left(t_screen *screen);
+
+void        screen_move_right(t_screen *screen);
 
 void        screen_clear(t_screen *screen);
 

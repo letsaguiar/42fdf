@@ -14,7 +14,12 @@ static void calc_top_left(t_point *point, t_screen *screen, int x, int y, size_t
     int dstY = y * screen->tile_height;
     int dstZ = screen->map->data[y][x];
 
-    *point = (t_point){dstX - offset_x, dstY - offset_y, dstZ};
+    *point = (t_point){
+        dstX - offset_x + screen->move_right - screen->move_left,
+        dstY - offset_y + screen->move_down - screen->move_up,
+        dstZ
+    };
+
     project(point, offset_x, offset_y);
 }
 
