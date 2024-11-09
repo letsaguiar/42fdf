@@ -1,83 +1,52 @@
 #include "fdf.h"
 
-void    screen_render_iter(void *params, int x, int y, int z)
+static void calc_top_left(t_point *point, t_screen *screen, int x, int y, size_t offset_x, size_t offset_y)
 {
-    t_screen *screen = params;
-    t_map *map = screen->map;
-    t_image *image = screen->image;
+    int dstX = x * TILE_SIZE;
+    int dstY = y * TILE_SIZE;
+    int dstZ = screen->map->data[y][x];
 
-    size_t map_height = map->height * TILE_SIZE;
-    size_t screen_height = SCREEN_SIZE;
-    size_t offset_y = (screen_height - map_height) / 2;
-
-    size_t map_width = map->width * TILE_SIZE;
-    size_t screen_width = SCREEN_SIZE;
-    size_t offset_x = (screen_width - map_width) / 2;
-
-    t_point point = {x * TILE_SIZE, y * TILE_SIZE, z};
-    image_draw_square(image, point, offset_x, offset_y, 0x00FF00);
+    *point = (t_point){dstX - offset_x, dstY - offset_y, dstZ};
+    project(point, offset_x, offset_y);
 }
 
-void    screen_render_connect(void *params, int x, int y, int z)
+static void calc_top_right(t_point *point, t_screen *screen, int x, int y, size_t offset_x, size_t offset_y)
 {
-    t_screen *screen = params;
-    t_map *map = screen->map;
-    int **data = map->data;
-    t_image *image = screen->image;
+    if ((size_t)x + 1 >= screen->map->width)
+        return (calc_top_left(point, screen, x, y, offset_x, offset_y));
+    
+    return (calc_top_left(point, screen, x + 1, y, offset_x, offset_y));
+}
 
-    size_t map_height = map->height * TILE_SIZE;
-    size_t screen_height = SCREEN_SIZE;
-    size_t offset_y = (screen_height - map_height) / 2;
-
-    size_t map_width = map->width * TILE_SIZE;
-    size_t screen_width = SCREEN_SIZE;
-    size_t offset_x = (screen_width - map_width) / 2;
-
-    if ((size_t)x < map->width - 1)
-    {
-        t_point point = {x * TILE_SIZE, y * TILE_SIZE, z};
-        t_point right = { (x + 1) * TILE_SIZE, y * TILE_SIZE, data[y][x + 1] };
-
-        int tile_offset = TILE_SIZE / 2;
-        t_point p1 = {point.x + tile_offset, point.y - tile_offset, point.z};
-        t_point p2 = {point.x + tile_offset, point.y + tile_offset, point.z};
-        t_point p3 = {right.x - tile_offset, right.y - tile_offset, right.z};
-        t_point p4 = {right.x - tile_offset, right.y + tile_offset, right.z};
-
-        project(&p1, offset_x, offset_y); project(&p2, offset_x, offset_y);
-        project(&p3, offset_x, offset_y); project(&p4, offset_x, offset_y);
-
-        if (point.z != right.z)
-        {
-            image_draw_line(image, p1, p3, 0x00FF00);
-            image_draw_line(image, p2, p4, 0x00FF00);
-        }
-    }
-
-    if ((size_t)y < map->height - 1)
-    {
-        t_point point = {x * TILE_SIZE, y * TILE_SIZE, z};
-        t_point down = { x * TILE_SIZE, (y + 1) * TILE_SIZE, data[y + 1][x] };
-
-        int tile_offset = TILE_SIZE / 2;
-        t_point p1 = {point.x - tile_offset, point.y + tile_offset, point.z};
-        t_point p2 = {point.x + tile_offset, point.y + tile_offset, point.z};
-        t_point p3 = {down.x - tile_offset, down.y - tile_offset, down.z};
-        t_point p4 = {down.x + tile_offset, down.y - tile_offset, down.z};
-
-        project(&p1, offset_x, offset_y); project(&p2, offset_x, offset_y);
-        project(&p3, offset_x, offset_y); project(&p4, offset_x, offset_y);
-
-        if (point.z != down.z)
-        {
-            image_draw_line(image, p1, p3, 0x00FF00);
-            image_draw_line(image, p2, p4, 0x00FF00);
-        }
-    }
+static void calc_bottom_left(t_point *point, t_screen *screen, int x, int y, size_t offset_x, size_t offset_y)
+{
+    if ((size_t)y + 1 >= screen->map->height)
+        return (calc_top_left(point, screen, x, y, offset_x, offset_y));
+    
+    return (calc_top_left(point, screen, x, y + 1, offset_x, offset_y));
 }
 
 void    screen_render(t_screen *screen)
 {
-    map_iter_row(screen->map, screen_render_iter, screen);
-    map_iter_row(screen->map, screen_render_connect, screen);
+    t_map *map = screen->map;
+
+    size_t map_height = map->height * TILE_SIZE;
+    size_t screen_height = SCREEN_SIZE;
+    size_t offset_y = (screen_height - map_height) / 2;
+
+    size_t map_width = map->width * TILE_SIZE;
+    size_t screen_width = SCREEN_SIZE;
+    size_t offset_x = (screen_width - map_width) / 2;
+
+    for (size_t y = 0; y < map->height; y++)
+        for (size_t x = 0; x < map->width; x++)
+        {
+            t_point top_left, top_right, bottom_left;
+            calc_top_left(&top_left, screen, x, y, offset_x, offset_y);
+            calc_top_right(&top_right, screen, x, y, offset_x, offset_y);
+            calc_bottom_left(&bottom_left, screen, x, y, offset_x, offset_y);
+
+            image_draw_line(screen->image, top_left, top_right, 0x00FF00);
+            image_draw_line(screen->image, top_left, bottom_left, 0x00FF00);
+        }
 }
